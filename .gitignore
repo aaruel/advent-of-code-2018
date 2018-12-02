@@ -2,3 +2,4 @@
 !*.pony
 !*.txt
 !.gitignore
+!README.md
