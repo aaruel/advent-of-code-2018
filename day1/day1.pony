@@ -1,17 +1,8 @@
+use "package:../utils/"
 use "files"
 use "collections"
 
 actor Main
-    fun get_file(env: Env, filename: String): (File | None) =>
-        try
-            let path = FilePath(env.root as AmbientAuth, filename)?
-            match OpenFile(path)
-            | let file: File => file
-            else
-                env.err.print("File Error")
-            end
-        end
-
     fun part1(nums: Array[I32]): String =>
         var acc: I32 = 0
         for num in nums.values() do
@@ -35,24 +26,16 @@ actor Main
         ""
 
     new create(env: Env) =>
-        match get_file(env, "data.txt")
-        | let file: File =>
-            let lines = FileLines(file)
-            try
-                let nums = Array[I32]()
-                while lines.has_next() do
-                    let line = lines.next()?
-                    line.replace("+", "")
-                    (let num, let _) = line.read_int[I32]()?
-                    nums.push(num)
-                end
+        let nums = Helpers.read_lines[I32](env, "data.txt", {(line: String ref): I32 => 
+            line.replace("+", "")
+            var num: I32 = 0
+            try (num, let _) = line.read_int[I32]()? end
+            num
+        })
 
-                // Part 1
-                env.out.print("Part 1: " + part1(nums))
-
-                // Part 2
-                env.out.print("Part 2: " + part2(nums))
-            end
-        end
+        env.out.print("Part 1: " + part1(nums))
+        env.out.print("Part 2: " + part2(nums))
+        
+        
 
         
