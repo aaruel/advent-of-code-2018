@@ -1,0 +1,4 @@
+*
+!*.pony
+!*.txt
+!.gitignore
