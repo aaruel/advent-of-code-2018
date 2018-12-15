@@ -1,2 +1,9 @@
 # Ignore files with no extension
-[^\.]*
+*
+!/**/
+!*.*
+
+.DS_Store
+*.hi
+*.o
+
